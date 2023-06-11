@@ -48,15 +48,17 @@ app.post("/episodes", async (req, res) => {
     const { youtubeVideoID, episodeName } = req.body;
 
     // Create a new document in 'tmkoc-episodes' collection
-    await db.collection("tmkoc-episodes").add({
-      youtubeVideoID,
-      episodeName,
-    });
+    await db
+      .collection("tmkoc-episodes")
+      .doc(youtubeVideoID)
+      .set({ youtubeVideoID, episodeName });
 
     res.status(201).json({ message: "Episode submitted successfully" });
   } catch (error) {
     console.error("Error submitting episode:", error);
-    res.status(500).json({ error: "Failed to submit episode" });
+    res
+      .status(500)
+      .json({ errorMessage: "Failed to submit episode", error: error });
   }
 });
 
