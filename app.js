@@ -14,7 +14,7 @@ admin.initializeApp({
 // Initialize Express app
 const app = express();
 const corsOptions = {
-  origin: "https://www.youtube.com",
+  origin: "*",
 };
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
