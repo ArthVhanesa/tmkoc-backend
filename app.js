@@ -1,9 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const admin = require("firebase-admin");
+require("dotenv").config();
 
 // Initialize Firebase Admin SDK
-const serviceAccountKey = require("./serviceAccountKey.json");
+const serviceAccountKey = JSON.parse(process.env.SERVICE_ACCOUNT_KEY);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccountKey),
