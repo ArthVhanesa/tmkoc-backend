@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const admin = require("firebase-admin");
+const cors = require("cors");
 require("dotenv").config();
 
 // Initialize Firebase Admin SDK
@@ -12,6 +13,7 @@ admin.initializeApp({
 
 // Initialize Express app
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 // Firebase Firestore instance
