@@ -65,6 +65,25 @@ app.post("/episodes", async (req, res) => {
   }
 });
 
+// GET route to redirect to a random YouTube video
+app.get("/random-episode", async (req, res) => {
+  try {
+    const episodesRef = db.collection("tmkoc-episodes");
+    const snapshot = await episodesRef.get();
+
+    const totalEpisodes = snapshot.size;
+    const randomIndex = Math.floor(Math.random() * totalEpisodes);
+    const randomEpisode = snapshot.docs[randomIndex];
+    const videoId = randomEpisode.data().youtubeVideoID;
+    const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
+    res.redirect(youtubeUrl);
+  } catch (error) {
+    console.error("Error redirecting to random video:", error);
+    res.status(500).json({ error: "Failed to redirect to random video" });
+  }
+});
+
 // Start the server
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
